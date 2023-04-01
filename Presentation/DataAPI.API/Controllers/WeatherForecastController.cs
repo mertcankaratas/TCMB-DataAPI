@@ -1,3 +1,5 @@
+using DataAPI.Infrastructure.Deserialize;
+using DataAPI.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAPI.API.Controllers
@@ -28,6 +30,17 @@ namespace DataAPI.API.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+
+        [HttpGet("getall")]
+        public async Task<IActionResult> GetAll()
+        {
+
+            List<ExchangeRateItem> data = await TCMBExchangeRateService.GetData("usd");
+
+            return Ok(data);
+
         }
     }
 }
