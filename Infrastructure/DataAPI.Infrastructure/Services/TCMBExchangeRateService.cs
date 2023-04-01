@@ -49,7 +49,7 @@ namespace DataAPI.Infrastructure.Services
 
 
                         exchangeRateItem.Date = properties.ElementAt(k++).Value.GetString();
-                        exchangeRateItem.ForexBuyying = properties.ElementAt(k++).Value.GetString(); ;
+                        exchangeRateItem.ForexBuyying = properties.ElementAt(k++).Value.GetString(); 
                         exchangeRateItem.ForexSelling = properties.ElementAt(k++).Value.GetString();
                         exchangeRateItem.CurrencyCode = curencyType;
                         long number;
