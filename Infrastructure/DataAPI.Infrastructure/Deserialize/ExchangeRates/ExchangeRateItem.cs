@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAPI.Infrastructure.Deserialize
+namespace DataAPI.Infrastructure.Deserialize.ExchangeRates
 {
     public class ExchangeRateItem
     {

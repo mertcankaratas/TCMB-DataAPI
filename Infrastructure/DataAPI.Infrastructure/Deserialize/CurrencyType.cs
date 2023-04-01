@@ -10,7 +10,7 @@ namespace DataAPI.Infrastructure.Deserialize
     public enum CurrencyType
     {
 
-        [EnumMember(Value = "TP.DK.USD.A-TP.DK.USD.S")]
+        
         USD,
         [EnumMember(Value = "TP.DK.EUR.A-TP.DK.EUR.S")]
         EUR,

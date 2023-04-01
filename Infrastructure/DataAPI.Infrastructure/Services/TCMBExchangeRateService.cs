@@ -1,4 +1,4 @@
-﻿using DataAPI.Infrastructure.Deserialize;
+﻿using DataAPI.Infrastructure.Deserialize.ExchangeRates;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
