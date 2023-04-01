@@ -48,9 +48,9 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-                        exchangeRateItem.Tarih = properties.ElementAt(k++).Value.GetString();
-                        exchangeRateItem.Buy = properties.ElementAt(k++).Value.GetString(); ;
-                        exchangeRateItem.Sell = properties.ElementAt(k++).Value.GetString();
+                        exchangeRateItem.Date = properties.ElementAt(k++).Value.GetString();
+                        exchangeRateItem.ForexBuyying = properties.ElementAt(k++).Value.GetString(); ;
+                        exchangeRateItem.ForexSelling = properties.ElementAt(k++).Value.GetString();
                         exchangeRateItem.CurrencyCode = curencyType;
                         long number;
 

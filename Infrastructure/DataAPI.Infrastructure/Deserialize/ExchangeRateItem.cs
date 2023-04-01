@@ -8,10 +8,10 @@ namespace DataAPI.Infrastructure.Deserialize
 {
     public class ExchangeRateItem
     {
-        public string Tarih { get; set; }
-        public string Buy { get; set; }
-        public string Sell { get; set; }
-        public long UnixTime { get; set; }
         public string CurrencyCode { get; set; }
+        public string ForexBuyying { get; set; }
+        public string ForexSelling { get; set; }
+        public string Date { get; set; }
+        public long UnixTime { get; set; }
     }
 }
