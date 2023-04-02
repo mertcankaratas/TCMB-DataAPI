@@ -35,37 +35,37 @@ namespace DataAPI.API.Controllers
         }
 
 
-        [HttpGet("getallexchange")]
-        public async Task<IActionResult> GetAllExchange()
-        {
+        //[HttpGet("getallexchange")]
+        //public async Task<IActionResult> GetAllExchange()
+        //{
 
-            List<ExchangeRateItem> data = await TCMBExchangeRateService.GetExchangData("USD");
+        //    List<ExchangeRateItem> data = await TCMBExchangeRateService.GetExchangData("USD");
 
-            return Ok(data);
+        //    return Ok(data);
 
-        }
-
-
-        [HttpGet("getallexchangeeffective")]
-        public async Task<IActionResult> GetAllExchangeEffective()
-        {
-
-            List<ExchangeEffectiveRateItem> data = await TCMBExchangeRateService.GetExchangEffectiveData("USD");
-
-            return Ok(data);
-
-        }
+        //}
 
 
+        //[HttpGet("getallexchangeeffective")]
+        //public async Task<IActionResult> GetAllExchangeEffective()
+        //{
 
-        [HttpGet("getallexchangecross")]
-        public async Task<IActionResult> GetAllExchangeCross()
-        {
+        //    List<ExchangeEffectiveRateItem> data = await TCMBExchangeRateService.GetExchangEffectiveData("USD");
 
-            List<ExchangeCrossRateItem> data = await TCMBExchangeRateService.GetExchangCrossData("USD");
+        //    return Ok(data);
 
-            return Ok(data);
+        //}
 
-        }
+
+
+        //[HttpGet("getallexchangecross")]
+        //public async Task<IActionResult> GetAllExchangeCross()
+        //{
+
+        //    List<ExchangeCrossRateItem> data = await TCMBExchangeRateService.GetExchangCrossData("USD");
+
+        //    return Ok(data);
+
+        //}
     }
 }

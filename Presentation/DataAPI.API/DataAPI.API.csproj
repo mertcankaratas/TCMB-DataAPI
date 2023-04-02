@@ -8,11 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\DataAPI.Application\DataAPI.Application.csproj" />
+    <ProjectReference Include="..\..\Core\DataAPI.Domain\DataAPI.Domain.csproj" />
     <ProjectReference Include="..\..\Infrastructure\DataAPI.Infrastructure\DataAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\DataAPI.Persistence\DataAPI.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
