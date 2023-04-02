@@ -1,6 +1,7 @@
 ﻿using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
