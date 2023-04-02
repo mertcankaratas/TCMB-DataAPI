@@ -2,6 +2,7 @@
 using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -28,15 +29,17 @@ namespace DataAPI.Infrastructure.Services
             curencyType = curencyType.ToUpper();
             List<ExchangeRateItem> data;
 
-            var exchangeRateSection = _configuration.GetSection("Exchange");
+            var exchangeRateSection = _configuration.GetSection("ExchangeRate");
 
+            var exchangetype = exchangeRateSection[$"Exchange:{curencyType}"];
+            var apiKey = _configuration["ApiKey"];
             using (var client = new HttpClient())
             {
                 var startDate = DateTime.Now.AddMonths(-2).ToString("dd-MM-yyyy"); // 2 ay önceki tarih
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
                 /*var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.A-TP.DK.USD.S&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequence=2";*/
 
-                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangeRateSection[$"Normal:{curencyType}"]}&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequence=2";
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2";
 
 
                 var response = await client.GetAsync(url);
@@ -92,18 +95,21 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-        public async Task<List<ExchangeEffectiveRateItem>> GetExchangEffectiveData(string curencyType)
+        public async Task<List<ExchangeEffectiveRateItem>> GetExchangeEffectiveData(string curencyType)
         {
             curencyType = curencyType.ToUpper();
             List<ExchangeEffectiveRateItem> datas;
 
+            var exchangeRateSection = _configuration.GetSection("ExchangeRate");
+            var exchangetype = exchangeRateSection[$"EffectiveExchange:{curencyType}"];
+            var apiKey = _configuration["ApiKey"];
             using (var client = new HttpClient())
             {
                 var startDate = DateTime.Now.AddMonths(-2).ToString("dd-MM-yyyy"); // 2 ay önceki tarih
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
 
 
-                var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.GBP.A-TP.DK.GBP.S-TP.DK.GBP.A.EF-TP.DK.GBP.S.EF-&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequency=2";
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2";
 
 
                 var response = await client.GetAsync(url);

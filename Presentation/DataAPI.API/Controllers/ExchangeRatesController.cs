@@ -1,4 +1,5 @@
 ﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,17 @@ namespace DataAPI.API.Controllers
         {
 
             List<ExchangeRateItem> data = await _exchangeRateService.GetExchangData("BGN");
+
+            return Ok(data);
+
+        }
+
+
+        [HttpGet("getallexchangeeffective")]
+        public async Task<IActionResult> GetAllExchangeEffective()
+        {
+
+            List<ExchangeEffectiveRateItem> data = await _exchangeRateService.GetExchangeEffectiveData("USD");
 
             return Ok(data);
 
