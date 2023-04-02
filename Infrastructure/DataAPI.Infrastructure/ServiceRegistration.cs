@@ -1,4 +1,5 @@
-﻿using DataAPI.Infrastructure.Services;
+﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+using DataAPI.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace DataAPI.Infrastructure
     {
         public static void AddInfrastructeServices(this IServiceCollection serviceCollection)
         {
-           
+            serviceCollection.AddSingleton<ITCMBExchangeRateService, TCMBExchangeRateService>();
         }
     }
 }

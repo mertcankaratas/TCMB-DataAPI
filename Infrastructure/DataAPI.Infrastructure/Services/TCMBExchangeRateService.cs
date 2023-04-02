@@ -16,10 +16,19 @@ namespace DataAPI.Infrastructure.Services
 {
     public class TCMBExchangeRateService:ITCMBExchangeRateService
     {
+        readonly IConfiguration _configuration;
+
+        public TCMBExchangeRateService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public async Task<List<ExchangeRateItem>> GetExchangData(string curencyType)
         {
             curencyType = curencyType.ToUpper();
             List<ExchangeRateItem> data;
+
+            var exchangeRateSection = _configuration.GetSection("Exchange");
 
             using (var client = new HttpClient())
             {
@@ -27,7 +36,7 @@ namespace DataAPI.Infrastructure.Services
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
                 /*var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.A-TP.DK.USD.S&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequence=2";*/
 
-                var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.A-TP.DK.USD.S&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequence=2";
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangeRateSection[$"Normal:{curencyType}"]}&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequence=2";
 
 
                 var response = await client.GetAsync(url);
