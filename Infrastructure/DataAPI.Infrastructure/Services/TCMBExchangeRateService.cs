@@ -1,4 +1,5 @@
-﻿using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
+﻿using DataAPI.Application.Abstraction.Services.Exchange;
+using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
 using Microsoft.Extensions.Configuration;
@@ -13,9 +14,9 @@ using System.Threading.Tasks;
 
 namespace DataAPI.Infrastructure.Services
 {
-    public static class TCMBExchangeRateService
+    public class TCMBExchangeRateService:ITCMBExchangeRateService
     {
-        public static async Task<List<ExchangeRateItem>> GetExchangData(string curencyType)
+        public async Task<List<ExchangeRateItem>> GetExchangData(string curencyType)
         {
             curencyType = curencyType.ToUpper();
             List<ExchangeRateItem> data;
@@ -82,7 +83,7 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-        public static async Task<List<ExchangeEffectiveRateItem>> GetExchangEffectiveData(string curencyType)
+        public async Task<List<ExchangeEffectiveRateItem>> GetExchangEffectiveData(string curencyType)
         {
             curencyType = curencyType.ToUpper();
             List<ExchangeEffectiveRateItem> datas;
@@ -91,7 +92,7 @@ namespace DataAPI.Infrastructure.Services
             {
                 var startDate = DateTime.Now.AddMonths(-2).ToString("dd-MM-yyyy"); // 2 ay önceki tarih
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
-              
+
 
                 var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.GBP.A-TP.DK.GBP.S-TP.DK.GBP.A.EF-TP.DK.GBP.S.EF-&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequency=2";
 
@@ -123,7 +124,7 @@ namespace DataAPI.Infrastructure.Services
                         exchangeEffectiveRateItem.ForexSelling = properties.ElementAt(k++).Value.GetString();
                         exchangeEffectiveRateItem.BanknoteBuyying = properties.ElementAt(k++).Value.GetString();
                         exchangeEffectiveRateItem.BanknoteSelling = properties.ElementAt(k++).Value.GetString();
-                                
+
                         exchangeEffectiveRateItem.CurrencyCode = curencyType;
                         long number;
 
@@ -151,7 +152,7 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-        public static async Task<List<ExchangeCrossRateItem>> GetExchangCrossData(string curencyType)
+        public async Task<List<ExchangeCrossRateItem>> GetExchangCrossData(string curencyType)
         {
             curencyType = curencyType.ToUpper();
             List<ExchangeCrossRateItem> datas;
@@ -190,7 +191,7 @@ namespace DataAPI.Infrastructure.Services
                         exchangeCrossRateItem.Date = properties.ElementAt(k++).Value.GetString();
                         exchangeCrossRateItem.Unit = properties.ElementAt(k++).Value.GetString();
                         exchangeCrossRateItem.CrossRate = properties.ElementAt(k++).Value.GetString();
-             
+
 
                         exchangeCrossRateItem.CurrencyCode = curencyType;
                         long number;
