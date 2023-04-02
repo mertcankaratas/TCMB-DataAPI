@@ -1,4 +1,4 @@
-﻿using DataAPI.Application.Abstraction.Services.Exchange;
+﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
 using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;

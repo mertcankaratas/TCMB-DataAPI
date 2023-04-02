@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAPI.Application.Abstraction.Services.Exchange
+namespace DataAPI.Application.Abstraction.Services.ExchangeRateRead
 {
     public interface ITCMBExchangeRateService
     {
