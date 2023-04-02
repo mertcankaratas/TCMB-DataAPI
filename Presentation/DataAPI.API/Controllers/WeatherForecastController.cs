@@ -1,3 +1,4 @@
+using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
 using DataAPI.Infrastructure.Services;
@@ -50,6 +51,18 @@ namespace DataAPI.API.Controllers
         {
 
             List<ExchangeEffectiveRateItem> data = await TCMBExchangeRateService.GetExchangEffectiveData("USD");
+
+            return Ok(data);
+
+        }
+
+
+
+        [HttpGet("getallexchangecross")]
+        public async Task<IActionResult> GetAllExchangeCross()
+        {
+
+            List<ExchangeCrossRateItem> data = await TCMBExchangeRateService.GetExchangCrossData("USD");
 
             return Ok(data);
 

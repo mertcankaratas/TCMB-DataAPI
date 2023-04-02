@@ -9,6 +9,6 @@ namespace DataAPI.Infrastructure.Deserialize.ExchangeCrossRates
     public class ExchangeCrossRates
     {
         public int totalCount { get; set; }
-        public List<ExchangeCrossRateItem> item { get; set; }
+        public List<ExchangeCrossRateItem> items { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
+﻿using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
+using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
 using System;
 using System.Collections.Generic;
@@ -147,7 +148,75 @@ namespace DataAPI.Infrastructure.Services
 
         }
 
-        
+
+
+        public static async Task<List<ExchangeCrossRateItem>> GetExchangCrossData(string curencyType)
+        {
+            curencyType = curencyType.ToUpper();
+            List<ExchangeCrossRateItem> datas;
+
+            using (var client = new HttpClient())
+            {
+                var startDate = DateTime.Now.AddMonths(-2).ToString("dd-MM-yyyy"); // 2 ay önceki tarih
+                var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
+
+
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.C-TP.DK.EUR.C&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequency=2";
+
+
+                var response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStringAsync();
+
+
+
+                JsonDocument jsonDoc = JsonDocument.Parse(content);
+
+                ExchangeCrossRates exchangeCrossRates = new ExchangeCrossRates();
+                exchangeCrossRates.totalCount = jsonDoc.RootElement.GetProperty("totalCount").GetInt32();
+                exchangeCrossRates.items = new List<ExchangeCrossRateItem>();
+                foreach (JsonElement item in jsonDoc.RootElement.GetProperty("items").EnumerateArray())
+                {
+                    IEnumerable<JsonProperty> properties = item.EnumerateObject();
+                    if (properties.ElementAt(1).Value.GetString() != null)
+                    {
+                        int k = 0;
+                        ExchangeCrossRateItem exchangeCrossRateItem = new ExchangeCrossRateItem();
+
+
+
+                        exchangeCrossRateItem.Date = properties.ElementAt(k++).Value.GetString();
+                        exchangeCrossRateItem.Unit = properties.ElementAt(k++).Value.GetString();
+                        exchangeCrossRateItem.CrossRate = properties.ElementAt(k++).Value.GetString();
+             
+
+                        exchangeCrossRateItem.CurrencyCode = curencyType;
+                        long number;
+
+
+
+                        JsonElement element = item.GetProperty("UNIXTIME");
+                        long.TryParse(element.GetProperty("$numberLong").GetString(), out number);
+                        exchangeCrossRateItem.UnixTime = number;
+                        exchangeCrossRates.items.Add(exchangeCrossRateItem);
+
+                    }
+
+                }
+
+
+
+                datas = exchangeCrossRates.items;
+
+            }
+
+
+            return datas;
+
+        }
+
+
     }
 
 }
