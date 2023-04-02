@@ -10,7 +10,9 @@ namespace DataAPI.Infrastructure.Deserialize.ExchangeCrossRates
     {
         public string CurrencyCode { get; set; }
         public string Unit { get; set; }
+        public string FromCurrency { get; set; }
         public string CrossRate { get; set; }
+        public string ToCurrency { get; set; }
         public string Date { get; set; }
         public long UnixTime { get; set; }
     }

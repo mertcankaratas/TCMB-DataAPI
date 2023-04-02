@@ -9,6 +9,8 @@ namespace DataAPI.Infrastructure.Deserialize.ExchangeRates
     public class ExchangeRateItem
     {
         public string CurrencyCode { get; set; }
+        public int Unit { get; set; }
+        public string Currency { get; set; }
         public string ForexBuyying { get; set; }
         public string ForexSelling { get; set; }
         public string Date { get; set; }
