@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
 using DataAPI.Application.Abstraction.Services.ExchangeRateWrite;
+using DataAPI.Application.Enums.Exchange;
+using DataAPI.Application.Repositories;
+using DataAPI.Infrastructure.Deserialize.ExchangeRates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +16,27 @@ namespace DataAPI.Persistence.Services.ExchangeRateWrite
     {
         readonly ITCMBExchangeRateService _exchangeRateService;
         readonly IMapper _mapper;
-        readonly IExchangeRateWriteService _exchangeRateWriteService;
+        readonly IExchangeRateWriteRepository _writeRepository;
 
-        public ExchangeRateWriteService(ITCMBExchangeRateService exchangeRateService, IMapper mapper, IExchangeRateWriteService exchangeRateWriteService)
+        public ExchangeRateWriteService(ITCMBExchangeRateService exchangeRateService, IMapper mapper, IExchangeRateWriteRepository writeRepository)
         {
             _exchangeRateService = exchangeRateService;
             _mapper = mapper;
-            _exchangeRateWriteService = exchangeRateWriteService;
+            _writeRepository = writeRepository;
         }
 
-        public Task WriteDbExchangeRateItems()
+        public async Task WriteDbExchangeRateItems()
         {
-            throw new NotImplementedException();
+            foreach(ExchangeCurrencyType type in Enum.GetValues(typeof(ExchangeCurrencyType)))
+            {
+                List<ExchangeRateItem> items = await _exchangeRateService.GetExchangeData(type);
+
+                List<Domain.Entities.ExchangeRate> exchanges = _mapper.Map<List<ExchangeRateItem>, List<Domain.Entities.ExchangeRate>>(items);
+
+                await _writeRepository.AddRangeAsync(exchanges);
+                await _writeRepository.SaveAsync();
+            }
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+using DataAPI.Application.Abstraction.Services.ExchangeRateWrite;
 using DataAPI.Application.Repositories;
 using DataAPI.Domain.Entities;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
@@ -14,25 +15,17 @@ namespace DataAPI.Application.Features.Commands.ExchangeRate.CreateExchangeRate
 {
     public class CreateExchangeRateCommandHandler : IRequestHandler<CreateExchangeRateCommandRequest, CreateExchangeRateCommandResponse>
     {
-        readonly IExchangeRateWriteRepository _repository;
-        readonly IMapper _mapper;
-        readonly ITCMBExchangeRateService _rateService;
+        readonly IExchangeRateWriteService _exchangeRateWriteService;
 
-        public CreateExchangeRateCommandHandler(IExchangeRateWriteRepository repository, IMapper mapper, ITCMBExchangeRateService rateService)
+        public CreateExchangeRateCommandHandler(IExchangeRateWriteService exchangeRateWriteService)
         {
-            _repository = repository;
-            _mapper = mapper;
-            _rateService = rateService;
+            _exchangeRateWriteService = exchangeRateWriteService;
         }
 
         public async Task<CreateExchangeRateCommandResponse> Handle(CreateExchangeRateCommandRequest request, CancellationToken cancellationToken)
         {
-            List<ExchangeRateItem> items = await _rateService.GetExchangeData(Enums.Exchange.ExchangeCurrencyType.BGN);
-            
-            List<Domain.Entities.ExchangeRate> exchanges = _mapper.Map<List<ExchangeRateItem>, List<Domain.Entities.ExchangeRate>>(items);
 
-            await _repository.AddRangeAsync(exchanges);
-            await _repository.SaveAsync();
+            await _exchangeRateWriteService.WriteDbExchangeRateItems();
             
             return new();
         }
