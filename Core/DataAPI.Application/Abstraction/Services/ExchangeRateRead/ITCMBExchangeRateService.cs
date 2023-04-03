@@ -11,10 +11,10 @@ namespace DataAPI.Application.Abstraction.Services.ExchangeRateRead
 {
     public interface ITCMBExchangeRateService
     {
-        Task<List<ExchangeRateItem>> GetExchangData(string curencyType);
-        Task<List<ExchangeEffectiveRateItem>> GetExchangEffectiveData(string curencyType);
+        Task<List<ExchangeRateItem>> GetExchangeData(string curencyType);
+        Task<List<ExchangeEffectiveRateItem>> GetExchangeEffectiveData(string curencyType);
 
 
-        Task<List<ExchangeCrossRateItem>> GetExchangCrossData(string curencyType);
+        Task<List<ExchangeCrossRateItem>> GetExchangeCrossData(string curencyType);
     }
 }

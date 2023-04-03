@@ -21,7 +21,7 @@ namespace DataAPI.API.Controllers
         public async Task<IActionResult> GetAllExchange()
         {
 
-            List<ExchangeRateItem> data = await _exchangeRateService.GetExchangData("BGN");
+            List<ExchangeRateItem> data = await _exchangeRateService.GetExchangeData("BGN");
 
             return Ok(data);
 

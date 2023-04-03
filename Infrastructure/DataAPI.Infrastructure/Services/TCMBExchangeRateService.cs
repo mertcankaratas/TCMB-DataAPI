@@ -24,7 +24,7 @@ namespace DataAPI.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public async Task<List<ExchangeRateItem>> GetExchangData(string curencyType)
+        public async Task<List<ExchangeRateItem>> GetExchangeData(string curencyType)
         {
             curencyType = curencyType.ToUpper();
             List<ExchangeRateItem> data;
@@ -167,7 +167,7 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-        public async Task<List<ExchangeCrossRateItem>> GetExchangCrossData(string curencyType)
+        public async Task<List<ExchangeCrossRateItem>> GetExchangeCrossData(string curencyType)
         {
             curencyType = curencyType.ToUpper();
             List<ExchangeCrossRateItem> datas;
