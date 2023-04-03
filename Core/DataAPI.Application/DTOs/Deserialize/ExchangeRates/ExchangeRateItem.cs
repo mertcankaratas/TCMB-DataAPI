@@ -11,9 +11,9 @@ namespace DataAPI.Infrastructure.Deserialize.ExchangeRates
         public string CurrencyCode { get; set; }
         public int Unit { get; set; }
         public string Currency { get; set; }
-        public string ForexBuyying { get; set; }
-        public string ForexSelling { get; set; }
-        public string Date { get; set; }
+        public decimal ForexBuyying { get; set; }
+        public decimal ForexSelling { get; set; }
+        public DateTime Date { get; set; }
         public long UnixTime { get; set; }
     }
 }

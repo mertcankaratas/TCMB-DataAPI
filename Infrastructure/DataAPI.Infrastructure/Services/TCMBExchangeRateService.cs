@@ -40,7 +40,7 @@ namespace DataAPI.Infrastructure.Services
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
                 /*var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.A-TP.DK.USD.S&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequence=2";*/
 
-                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2";
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2&decimalSeperator=,";
 
 
                 var response = await client.GetAsync(url);
@@ -65,9 +65,9 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-                        exchangeRateItem.Date = properties.ElementAt(k++).Value.GetString();
-                        exchangeRateItem.ForexBuyying = properties.ElementAt(k++).Value.GetString();
-                        exchangeRateItem.ForexSelling = properties.ElementAt(k++).Value.GetString();
+                        exchangeRateItem.Date = Convert.ToDateTime(properties.ElementAt(k++).Value.GetString());
+                        exchangeRateItem.ForexBuyying = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
+                        exchangeRateItem.ForexSelling = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
                  
                         long number;
 
@@ -115,7 +115,7 @@ namespace DataAPI.Infrastructure.Services
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
 
 
-                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2";
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2&decimalSeperator=,";
 
 
                 var response = await client.GetAsync(url);
@@ -140,11 +140,11 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-                        exchangeEffectiveRateItem.Date = properties.ElementAt(k++).Value.GetString();
-                        exchangeEffectiveRateItem.ForexBuyying = properties.ElementAt(k++).Value.GetString();
-                        exchangeEffectiveRateItem.ForexSelling = properties.ElementAt(k++).Value.GetString();
-                        exchangeEffectiveRateItem.BanknoteBuyying = properties.ElementAt(k++).Value.GetString();
-                        exchangeEffectiveRateItem.BanknoteSelling = properties.ElementAt(k++).Value.GetString();
+                        exchangeEffectiveRateItem.Date = Convert.ToDateTime(properties.ElementAt(k++).Value.GetString());
+                        exchangeEffectiveRateItem.ForexBuyying = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
+                        exchangeEffectiveRateItem.ForexSelling =   Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
+                        exchangeEffectiveRateItem.BanknoteBuyying =Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
+                        exchangeEffectiveRateItem.BanknoteSelling =Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
 
                         long number;
 
@@ -192,7 +192,7 @@ namespace DataAPI.Infrastructure.Services
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
 
 
-                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2";
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2&decimalSeperator=,";
 
 
                 var response = await client.GetAsync(url);
@@ -217,9 +217,9 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-                        exchangeCrossRateItem.Date = properties.ElementAt(0).Value.GetString();
+                        exchangeCrossRateItem.Date = Convert.ToDateTime(properties.ElementAt(0).Value.GetString());
                         //exchangeCrossRateItem.Unit = properties.ElementAt(k++).Value.GetString();
-                        exchangeCrossRateItem.CrossRate = properties.ElementAt(2).Value.GetString();
+                        exchangeCrossRateItem.CrossRate = Convert.ToDecimal(properties.ElementAt(2).Value.GetString());
 
 
                       
@@ -236,7 +236,7 @@ namespace DataAPI.Infrastructure.Services
                         exchangeCrossRateItem.CurrencyCode = exchangeRateSection[$"CurrencyCode:{curencyType}"];
                         exchangeCrossRateItem.FromCurrency = exchangeRateSection[$"FromCurrency:{curencyType}"];
                         exchangeCrossRateItem.ToCurrency = exchangeRateSection[$"ToCurrency:{curencyType}"];
-                        exchangeCrossRateItem.Unit = exchangeRateSection[$"Unit:{curencyType}"];
+                        exchangeCrossRateItem.Unit = Convert.ToInt32(exchangeRateSection[$"Unit:{curencyType}"]);
 
                     }
 
