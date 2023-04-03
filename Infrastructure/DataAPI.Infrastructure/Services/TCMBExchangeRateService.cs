@@ -67,7 +67,7 @@ namespace DataAPI.Infrastructure.Services
                         exchangeRateItem.Date = properties.ElementAt(k++).Value.GetString();
                         exchangeRateItem.ForexBuyying = properties.ElementAt(k++).Value.GetString();
                         exchangeRateItem.ForexSelling = properties.ElementAt(k++).Value.GetString();
-                        exchangeRateItem.CurrencyCode = curencyType;
+                 
                         long number;
 
 
@@ -76,6 +76,11 @@ namespace DataAPI.Infrastructure.Services
                         long.TryParse(element.GetProperty("$numberLong").GetString(), out number);
                         exchangeRateItem.UnixTime = number;
                         exchangeRates.items.Add(exchangeRateItem);
+
+                        // appsetings json
+                        exchangeRateItem.CurrencyCode = exchangeRateSection[$"CurrencyCode:{curencyType}"];
+                        exchangeRateItem.Currency = exchangeRateSection[$"Currency:{curencyType}"];
+                        exchangeRateItem.Unit = Convert.ToInt32(exchangeRateSection[$"Unit:{curencyType}"]);
 
                     }
 
@@ -140,7 +145,6 @@ namespace DataAPI.Infrastructure.Services
                         exchangeEffectiveRateItem.BanknoteBuyying = properties.ElementAt(k++).Value.GetString();
                         exchangeEffectiveRateItem.BanknoteSelling = properties.ElementAt(k++).Value.GetString();
 
-                        exchangeEffectiveRateItem.CurrencyCode = curencyType;
                         long number;
 
 
@@ -149,7 +153,11 @@ namespace DataAPI.Infrastructure.Services
                         long.TryParse(element.GetProperty("$numberLong").GetString(), out number);
                         exchangeEffectiveRateItem.UnixTime = number;
                         exchangeEffectiveRates.items.Add(exchangeEffectiveRateItem);
-
+                        
+                        // appsetings json
+                        exchangeEffectiveRateItem.CurrencyCode = exchangeRateSection[$"CurrencyCode:{curencyType}"];
+                        exchangeEffectiveRateItem.Currency = exchangeRateSection[$"Currency:{curencyType}"];
+                        exchangeEffectiveRateItem.Unit = Convert.ToInt32(exchangeRateSection[$"Unit:{curencyType}"]);
                     }
 
                 }
