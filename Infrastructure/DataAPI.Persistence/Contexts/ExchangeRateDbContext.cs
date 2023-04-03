@@ -15,5 +15,7 @@ namespace DataAPI.Persistence.Contexts
         }
 
         public DbSet<ExchangeRate> ExchangeRates { get; set; }
+        public DbSet<ExchangeEffectiveRate> ExchangeEffectiveRates { get; set; }
+        public DbSet<ExchangeCrossRate> ExchangeCrossRates { get; set; }
     }
 }
