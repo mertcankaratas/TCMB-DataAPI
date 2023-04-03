@@ -1,4 +1,6 @@
-﻿using DataAPI.Persistence.Contexts;
+﻿using DataAPI.Application.Repositories;
+using DataAPI.Persistence.Contexts;
+using DataAPI.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +16,16 @@ namespace DataAPI.Persistence
         public static void AddPersistenceServices(this IServiceCollection services)
         {
             services.AddDbContext<ExchangeRateDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
+
+
+            services.AddScoped<IExchangeCrossRateReadRepository, ExchangeCrossRateReadRepository>();
+            services.AddScoped<IExchangeCrossRateWriteRepository, ExchangeCrossRateWriteRepository>();
+
+            services.AddScoped<IExchangeEffectiveRateReadRepository, ExchangeEffectiveRateReadRepository>();
+            services.AddScoped<IExchangeEffectiveRateWriteRepository,ExchangeEffectiveRateWriteRepository>();
+
+            services.AddScoped<IExchangeRateReadRepository, ExchangeRateReadRepository>();
+            services.AddScoped<IExchangeRateWriteRepository,ExchangeRateWriteRepository>();
 
 
         }
