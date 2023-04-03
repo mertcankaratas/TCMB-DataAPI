@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\Core\DataAPI.Domain\DataAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\ExchangeRate\" />
+  </ItemGroup>
+
 </Project>
