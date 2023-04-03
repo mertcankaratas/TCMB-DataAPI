@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAPI.Application.Abstraction.Services.ExchangeCrossRateWrite
 {
-    public interface ExchangeCrossWriteService
+    public interface IExchangeCrossRateWriteService
     {
         Task WriteDbExchangeCrossRateItems();
     }

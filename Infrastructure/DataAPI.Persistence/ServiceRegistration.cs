@@ -1,5 +1,4 @@
-﻿using DataAPI.Application.Abstraction.Services.ExchangeEffectiveWrite;
-using DataAPI.Application.Abstraction.Services.ExchangeRateWrite;
+﻿using DataAPI.Application.Abstraction.Services.ExchangeRateWrite;
 using DataAPI.Application.Repositories;
 using DataAPI.Persistence.Contexts;
 using DataAPI.Persistence.Repositories;

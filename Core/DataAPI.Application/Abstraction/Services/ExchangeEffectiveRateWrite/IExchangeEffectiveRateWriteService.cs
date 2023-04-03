@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAPI.Application.Abstraction.Services.ExchangeEffectiveWrite
+namespace DataAPI.Application.Abstraction.Services.ExchangeEffectiveRateWrite
 {
-    public interface IExchangeEffectiveWriteService
+    public interface IExchangeEffectiveRateWriteService
     {
         Task WriteDbExchangeEffectiveRateItems();
     }
