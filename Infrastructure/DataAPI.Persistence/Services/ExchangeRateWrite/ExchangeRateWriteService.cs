@@ -1,4 +1,5 @@
-﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+﻿using AutoMapper;
+using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
 using DataAPI.Application.Abstraction.Services.ExchangeRateWrite;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,18 @@ namespace DataAPI.Persistence.Services.ExchangeRateWrite
 {
     public class ExchangeRateWriteService : IExchangeRateWriteService
     {
+        readonly ITCMBExchangeRateService _exchangeRateService;
+        readonly IMapper _mapper;
+        readonly IExchangeRateWriteService _exchangeRateWriteService;
 
-        public Task SetExchangeCrossRateItem()
+        public ExchangeRateWriteService(ITCMBExchangeRateService exchangeRateService, IMapper mapper, IExchangeRateWriteService exchangeRateWriteService)
         {
-            throw new NotImplementedException();
+            _exchangeRateService = exchangeRateService;
+            _mapper = mapper;
+            _exchangeRateWriteService = exchangeRateWriteService;
         }
 
-        public Task SetExchangeEffectiveRateItem()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SetExchangeRateItem()
+        public Task WriteDbExchangeRateItems()
         {
             throw new NotImplementedException();
         }

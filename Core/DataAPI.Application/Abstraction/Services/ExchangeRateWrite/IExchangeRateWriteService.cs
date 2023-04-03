@@ -8,9 +8,7 @@ namespace DataAPI.Application.Abstraction.Services.ExchangeRateWrite
 {
     public interface IExchangeRateWriteService
     {
-        Task SetExchangeRateItem();
-        Task SetExchangeEffectiveRateItem();
-        Task SetExchangeCrossRateItem();
-
+        Task WriteDbExchangeRateItems();
+       
     }
 }
