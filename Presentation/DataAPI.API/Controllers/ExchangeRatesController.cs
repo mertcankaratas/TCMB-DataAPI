@@ -1,7 +1,9 @@
 ﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+using DataAPI.Application.Features.Commands.ExchangeRate.CreateExchangeRate;
 using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,43 +13,54 @@ namespace DataAPI.API.Controllers
     [ApiController]
     public class ExchangeRatesController : ControllerBase
     {
-        readonly ITCMBExchangeRateService _exchangeRateService;
+        //readonly ITCMBExchangeRateService _exchangeRateService;
+        readonly IMediator _mediator;
 
-        public ExchangeRatesController(ITCMBExchangeRateService exchangeRateService)
+        public ExchangeRatesController(IMediator mediator)
         {
-            _exchangeRateService = exchangeRateService;
+            _mediator = mediator;
         }
 
-        [HttpGet("getallexchange")]
-        public async Task<IActionResult> GetAllExchange()
+        [HttpPost]
+        public async Task<IActionResult> GetAllExchange(CreateExchangeRateCommandRequest createExchangeRateCommandRequest)
         {
 
-            List<ExchangeRateItem> data = await _exchangeRateService.GetExchangeData(Application.Enums.Exchange.ExchangeCurrencyType.BGN);
+            CreateExchangeRateCommandResponse response = await _mediator.Send(createExchangeRateCommandRequest);
 
-            return Ok(data);
-
-        }
-
-
-        [HttpGet("getallexchangeeffective")]
-        public async Task<IActionResult> GetAllExchangeEffective()
-        {
-
-            List<ExchangeEffectiveRateItem> data = await _exchangeRateService.GetExchangeEffectiveData(Application.Enums.Exchange.ExchangeEffectiveCurrencyType.USD);
-
-            return Ok(data);
+            return Ok(response);
 
         }
 
-        [HttpGet("getallexchangecross")]
-        public async Task<IActionResult> GetAllExchangeCross()
-        {
+        //[HttpGet("getallexchange")]
+        //public async Task<IActionResult> GetAllExchange()
+        //{
 
-            List<ExchangeCrossRateItem> data = await _exchangeRateService.GetExchangeCrossData(Application.Enums.Exchange.ExchangeCrossCurrencyType.USDToAUD);
+        //    List<ExchangeRateItem> data = await _exchangeRateService.GetExchangeData(Application.Enums.Exchange.ExchangeCurrencyType.BGN);
 
-            return Ok(data);
+        //    return Ok(data);
 
-        }
+        //}
+
+
+        //[HttpGet("getallexchangeeffective")]
+        //public async Task<IActionResult> GetAllExchangeEffective()
+        //{
+
+        //    List<ExchangeEffectiveRateItem> data = await _exchangeRateService.GetExchangeEffectiveData(Application.Enums.Exchange.ExchangeEffectiveCurrencyType.USD);
+
+        //    return Ok(data);
+
+        //}
+
+        //[HttpGet("getallexchangecross")]
+        //public async Task<IActionResult> GetAllExchangeCross()
+        //{
+
+        //    List<ExchangeCrossRateItem> data = await _exchangeRateService.GetExchangeCrossData(Application.Enums.Exchange.ExchangeCrossCurrencyType.USDToAUD);
+
+        //    return Ok(data);
+
+        //}
 
     }
 }

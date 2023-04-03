@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace DataAPI.Infrastructure.Services
 {
-    public class TCMBExchangeRateService:ITCMBExchangeRateService
+    public class TCMBExchangeRateService : ITCMBExchangeRateService
     {
         readonly IConfiguration _configuration;
 
@@ -27,7 +27,7 @@ namespace DataAPI.Infrastructure.Services
 
         public async Task<List<ExchangeRateItem>> GetExchangeData(ExchangeCurrencyType curencyType)
         {
-          
+
             List<ExchangeRateItem> data;
 
             var exchangeRateSection = _configuration.GetSection("ExchangeRate");
@@ -65,23 +65,23 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-                        exchangeRateItem.Date = Convert.ToDateTime(properties.ElementAt(k++).Value.GetString());
+                        exchangeRateItem.Date = Convert.ToDateTime(properties.ElementAt(k++).Value.GetString()).ToUniversalTime();
                         exchangeRateItem.ForexBuyying = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
                         exchangeRateItem.ForexSelling = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
-                 
-                        long number;
+
+                        
 
 
 
                         JsonElement element = item.GetProperty("UNIXTIME");
-                        long.TryParse(element.GetProperty("$numberLong").GetString(), out number);
-                        exchangeRateItem.UnixTime = number;
-                        exchangeRates.items.Add(exchangeRateItem);
+                         
+                        exchangeRateItem.UnixTime = Convert.ToInt64(element.GetProperty("$numberLong").GetString().Replace(",00", "")); ;
 
                         // appsetings json
                         exchangeRateItem.CurrencyCode = exchangeRateSection[$"CurrencyCode:{curencyType}"];
                         exchangeRateItem.Currency = exchangeRateSection[$"Currency:{curencyType}"];
                         exchangeRateItem.Unit = Convert.ToInt32(exchangeRateSection[$"Unit:{curencyType}"]);
+                        exchangeRates.items.Add(exchangeRateItem);
 
                     }
 
@@ -103,7 +103,7 @@ namespace DataAPI.Infrastructure.Services
 
         public async Task<List<ExchangeEffectiveRateItem>> GetExchangeEffectiveData(ExchangeEffectiveCurrencyType curencyType)
         {
-            
+
             List<ExchangeEffectiveRateItem> datas;
 
             var exchangeRateSection = _configuration.GetSection("ExchangeRate");
@@ -140,25 +140,23 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-                        exchangeEffectiveRateItem.Date = Convert.ToDateTime(properties.ElementAt(k++).Value.GetString());
+                        exchangeEffectiveRateItem.Date = Convert.ToDateTime(properties.ElementAt(k++).Value.GetString()).ToUniversalTime();
+                       
                         exchangeEffectiveRateItem.ForexBuyying = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
-                        exchangeEffectiveRateItem.ForexSelling =   Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
-                        exchangeEffectiveRateItem.BanknoteBuyying =Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
-                        exchangeEffectiveRateItem.BanknoteSelling =Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
-
-                        long number;
-
+                        exchangeEffectiveRateItem.ForexSelling = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
+                        exchangeEffectiveRateItem.BanknoteBuyying = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
+                        exchangeEffectiveRateItem.BanknoteSelling = Convert.ToDecimal(properties.ElementAt(k++).Value.GetString());
 
 
                         JsonElement element = item.GetProperty("UNIXTIME");
-                        long.TryParse(element.GetProperty("$numberLong").GetString(), out number);
-                        exchangeEffectiveRateItem.UnixTime = number;
-                        exchangeEffectiveRates.items.Add(exchangeEffectiveRateItem);
-                        
+
+                        exchangeEffectiveRateItem.UnixTime = Convert.ToInt64(element.GetProperty("$numberLong").GetString().Replace(",00", "")); ;
+
                         // appsetings json
                         exchangeEffectiveRateItem.CurrencyCode = exchangeRateSection[$"CurrencyCode:{curencyType}"];
                         exchangeEffectiveRateItem.Currency = exchangeRateSection[$"Currency:{curencyType}"];
                         exchangeEffectiveRateItem.Unit = Convert.ToInt32(exchangeRateSection[$"Unit:{curencyType}"]);
+                        exchangeEffectiveRates.items.Add(exchangeEffectiveRateItem);
                     }
 
                 }
@@ -178,7 +176,7 @@ namespace DataAPI.Infrastructure.Services
 
         public async Task<List<ExchangeCrossRateItem>> GetExchangeCrossData(ExchangeCrossCurrencyType curencyType)
         {
-            
+
             List<ExchangeCrossRateItem> datas;
 
             var exchangeRateSection = _configuration.GetSection("CrossExchangeRate");
@@ -212,31 +210,28 @@ namespace DataAPI.Infrastructure.Services
                     IEnumerable<JsonProperty> properties = item.EnumerateObject();
                     if (properties.ElementAt(1).Value.GetString() != null)
                     {
-                        
+
                         ExchangeCrossRateItem exchangeCrossRateItem = new ExchangeCrossRateItem();
 
 
 
-                        exchangeCrossRateItem.Date = Convert.ToDateTime(properties.ElementAt(0).Value.GetString());
+                        exchangeCrossRateItem.Date = Convert.ToDateTime(properties.ElementAt(0).Value.GetString()).ToLocalTime();
                         //exchangeCrossRateItem.Unit = properties.ElementAt(k++).Value.GetString();
                         exchangeCrossRateItem.CrossRate = Convert.ToDecimal(properties.ElementAt(2).Value.GetString());
 
 
-                      
-                        long number;
-
 
 
                         JsonElement element = item.GetProperty("UNIXTIME");
-                        long.TryParse(element.GetProperty("$numberLong").GetString(), out number);
-                        exchangeCrossRateItem.UnixTime = number;
-                        exchangeCrossRates.items.Add(exchangeCrossRateItem);
+
+                        exchangeCrossRateItem.UnixTime = Convert.ToInt64(element.GetProperty("$numberLong").GetString().Replace(",00", "")); ;
 
                         // appsetings
                         exchangeCrossRateItem.CurrencyCode = exchangeRateSection[$"CurrencyCode:{curencyType}"];
                         exchangeCrossRateItem.FromCurrency = exchangeRateSection[$"FromCurrency:{curencyType}"];
                         exchangeCrossRateItem.ToCurrency = exchangeRateSection[$"ToCurrency:{curencyType}"];
                         exchangeCrossRateItem.Unit = Convert.ToInt32(exchangeRateSection[$"Unit:{curencyType}"]);
+                        exchangeCrossRates.items.Add(exchangeCrossRateItem);
 
                     }
 
