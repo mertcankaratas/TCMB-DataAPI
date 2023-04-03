@@ -180,13 +180,18 @@ namespace DataAPI.Infrastructure.Services
             curencyType = curencyType.ToUpper();
             List<ExchangeCrossRateItem> datas;
 
+            var exchangeRateSection = _configuration.GetSection("CrossExchangeRate");
+
+            var exchangetype = exchangeRateSection[$"CrossExchange:{curencyType}"];
+            var apiKey = _configuration["ApiKey"];
+
             using (var client = new HttpClient())
             {
                 var startDate = DateTime.Now.AddMonths(-2).ToString("dd-MM-yyyy"); // 2 ay önceki tarih
                 var endDate = DateTime.Now.ToString("dd-MM-yyyy"); // bugünkü tarih
 
 
-                var url = $"https://evds2.tcmb.gov.tr/service/evds/series=TP.DK.USD.C-TP.DK.EUR.C&startDate={startDate}&endDate={endDate}&type=json&key=3ffIKbWqrT&frequency=2";
+                var url = $"https://evds2.tcmb.gov.tr/service/evds/series={exchangetype}&startDate={startDate}&endDate={endDate}&type=json&key={apiKey}&frequence=2";
 
 
                 var response = await client.GetAsync(url);
@@ -206,17 +211,17 @@ namespace DataAPI.Infrastructure.Services
                     IEnumerable<JsonProperty> properties = item.EnumerateObject();
                     if (properties.ElementAt(1).Value.GetString() != null)
                     {
-                        int k = 0;
+                        
                         ExchangeCrossRateItem exchangeCrossRateItem = new ExchangeCrossRateItem();
 
 
 
-                        exchangeCrossRateItem.Date = properties.ElementAt(k++).Value.GetString();
-                        exchangeCrossRateItem.Unit = properties.ElementAt(k++).Value.GetString();
-                        exchangeCrossRateItem.CrossRate = properties.ElementAt(k++).Value.GetString();
+                        exchangeCrossRateItem.Date = properties.ElementAt(0).Value.GetString();
+                        //exchangeCrossRateItem.Unit = properties.ElementAt(k++).Value.GetString();
+                        exchangeCrossRateItem.CrossRate = properties.ElementAt(2).Value.GetString();
 
 
-                        exchangeCrossRateItem.CurrencyCode = curencyType;
+                      
                         long number;
 
 
@@ -225,6 +230,12 @@ namespace DataAPI.Infrastructure.Services
                         long.TryParse(element.GetProperty("$numberLong").GetString(), out number);
                         exchangeCrossRateItem.UnixTime = number;
                         exchangeCrossRates.items.Add(exchangeCrossRateItem);
+
+                        // appsetings
+                        exchangeCrossRateItem.CurrencyCode = exchangeRateSection[$"CurrencyCode:{curencyType}"];
+                        exchangeCrossRateItem.FromCurrency = exchangeRateSection[$"FromCurrency:{curencyType}"];
+                        exchangeCrossRateItem.ToCurrency = exchangeRateSection[$"ToCurrency:{curencyType}"];
+                        exchangeCrossRateItem.Unit = exchangeRateSection[$"Unit:{curencyType}"];
 
                     }
 
