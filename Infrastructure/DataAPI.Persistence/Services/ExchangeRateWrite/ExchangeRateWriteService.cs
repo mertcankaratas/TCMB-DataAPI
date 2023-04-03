@@ -10,12 +10,6 @@ namespace DataAPI.Persistence.Services.ExchangeRateWrite
 {
     public class ExchangeRateWriteService : IExchangeRateWriteService
     {
-        readonly ITCMBExchangeRateService _exchangeRateService;
-
-        public ExchangeRateWriteService(ITCMBExchangeRateService exchangeRateService)
-        {
-            _exchangeRateService = exchangeRateService;
-        }
 
         public Task SetExchangeCrossRateItem()
         {
