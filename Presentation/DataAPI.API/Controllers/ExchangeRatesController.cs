@@ -22,7 +22,7 @@ namespace DataAPI.API.Controllers
         public async Task<IActionResult> GetAllExchange()
         {
 
-            List<ExchangeRateItem> data = await _exchangeRateService.GetExchangeData("BGN");
+            List<ExchangeRateItem> data = await _exchangeRateService.GetExchangeData(Application.Enums.Exchange.ExchangeCurrencyType.BGN);
 
             return Ok(data);
 
@@ -33,7 +33,7 @@ namespace DataAPI.API.Controllers
         public async Task<IActionResult> GetAllExchangeEffective()
         {
 
-            List<ExchangeEffectiveRateItem> data = await _exchangeRateService.GetExchangeEffectiveData("USD");
+            List<ExchangeEffectiveRateItem> data = await _exchangeRateService.GetExchangeEffectiveData(Application.Enums.Exchange.ExchangeEffectiveCurrencyType.USD);
 
             return Ok(data);
 
@@ -43,7 +43,7 @@ namespace DataAPI.API.Controllers
         public async Task<IActionResult> GetAllExchangeCross()
         {
 
-            List<ExchangeCrossRateItem> data = await _exchangeRateService.GetExchangeCrossData("USDToAUD");
+            List<ExchangeCrossRateItem> data = await _exchangeRateService.GetExchangeCrossData(Application.Enums.Exchange.ExchangeCrossCurrencyType.USDToAUD);
 
             return Ok(data);
 

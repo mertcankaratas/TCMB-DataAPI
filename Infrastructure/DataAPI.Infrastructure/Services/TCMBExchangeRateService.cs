@@ -1,4 +1,5 @@
 ﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+using DataAPI.Application.Enums.Exchange;
 using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
@@ -24,9 +25,9 @@ namespace DataAPI.Infrastructure.Services
             _configuration = configuration;
         }
 
-        public async Task<List<ExchangeRateItem>> GetExchangeData(string curencyType)
+        public async Task<List<ExchangeRateItem>> GetExchangeData(ExchangeCurrencyType curencyType)
         {
-            curencyType = curencyType.ToUpper();
+          
             List<ExchangeRateItem> data;
 
             var exchangeRateSection = _configuration.GetSection("ExchangeRate");
@@ -100,9 +101,9 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-        public async Task<List<ExchangeEffectiveRateItem>> GetExchangeEffectiveData(string curencyType)
+        public async Task<List<ExchangeEffectiveRateItem>> GetExchangeEffectiveData(ExchangeEffectiveCurrencyType curencyType)
         {
-            curencyType = curencyType.ToUpper();
+            
             List<ExchangeEffectiveRateItem> datas;
 
             var exchangeRateSection = _configuration.GetSection("ExchangeRate");
@@ -175,9 +176,9 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-        public async Task<List<ExchangeCrossRateItem>> GetExchangeCrossData(string curencyType)
+        public async Task<List<ExchangeCrossRateItem>> GetExchangeCrossData(ExchangeCrossCurrencyType curencyType)
         {
-            curencyType = curencyType.ToUpper();
+            
             List<ExchangeCrossRateItem> datas;
 
             var exchangeRateSection = _configuration.GetSection("CrossExchangeRate");

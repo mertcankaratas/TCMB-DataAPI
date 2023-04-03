@@ -1,4 +1,5 @@
-﻿using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
+﻿using DataAPI.Application.Enums.Exchange;
+using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
 using System;
@@ -11,10 +12,10 @@ namespace DataAPI.Application.Abstraction.Services.ExchangeRateRead
 {
     public interface ITCMBExchangeRateService
     {
-        Task<List<ExchangeRateItem>> GetExchangeData(string curencyType);
-        Task<List<ExchangeEffectiveRateItem>> GetExchangeEffectiveData(string curencyType);
+        Task<List<ExchangeRateItem>> GetExchangeData(ExchangeCurrencyType curencyType);
+        Task<List<ExchangeEffectiveRateItem>> GetExchangeEffectiveData(ExchangeEffectiveCurrencyType curencyType);
 
 
-        Task<List<ExchangeCrossRateItem>> GetExchangeCrossData(string curencyType);
+        Task<List<ExchangeCrossRateItem>> GetExchangeCrossData(ExchangeCrossCurrencyType curencyType);
     }
 }
