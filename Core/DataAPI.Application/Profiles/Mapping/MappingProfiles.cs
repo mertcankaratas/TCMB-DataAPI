@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using DataAPI.Application.DTOs.ExchangeCrossRate;
+using DataAPI.Application.DTOs.ExchangeEffectiveRate;
+using DataAPI.Application.DTOs.ExchangeRate;
 using DataAPI.Domain.Entities;
 using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
@@ -24,6 +26,8 @@ namespace DataAPI.Application.Profiles.Mapping
             // Veritabanından entity'ler ile gelen dataları dto'lara map etme ve dışarıya öyle response olarak gönderme
 
             CreateMap<ExchangeCrossRate,ExchangeCrossRateListDTO>().ReverseMap();
+            CreateMap<ExchangeRate,ExchangeRateListDTO>().ReverseMap();
+            CreateMap<ExchangeEffectiveRate,ExchangeEffectiveRateListDTO>().ReverseMap();
 
         }
     }

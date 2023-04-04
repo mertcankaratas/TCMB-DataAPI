@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAPI.Application.Features.Queries.CrossRate.GetAllCrossRate
+namespace DataAPI.Application.Features.Queries.ExchangeCrossRate.GetAllCrossRate
 {
     public class GetAllCrossRateQueryHandler : IRequestHandler<GetAllCrossRateQueryRequest, GetAllCrossRateQueryResponse>
     {
@@ -24,14 +24,14 @@ namespace DataAPI.Application.Features.Queries.CrossRate.GetAllCrossRate
         public async Task<GetAllCrossRateQueryResponse> Handle(GetAllCrossRateQueryRequest request, CancellationToken cancellationToken)
         {
 
-            var result = _exchangeCrossRateReadRepository.GetAll();
+            var datas = _exchangeCrossRateReadRepository.GetAll();
 
-            List<ExchangeCrossRateListDTO> datas = _mapper.Map<List<ExchangeCrossRateListDTO>>(result);
+            List<ExchangeCrossRateListDTO> result = _mapper.Map<List<ExchangeCrossRateListDTO>>(datas);
             
 
             return new()
             {
-                results=datas
+                Results=result
             };
         }
     }
