@@ -1,7 +1,9 @@
 ﻿using DataAPI.Application.Features.Queries.ExchangeCrossRate.GetAllCrossRate;
 using DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCrossRate;
 using DataAPI.Application.Features.Queries.ExchangeEffectiveRate.GetAllExchangeEffectiveRate;
+using DataAPI.Application.Features.Queries.ExchangeEffectiveRate.GetByCurrencyExchangeEffectiveRate;
 using DataAPI.Application.Features.Queries.ExchangeRate.GetAllExchangeRate;
+using DataAPI.Application.Features.Queries.ExchangeRate.GetByCurrencyExchangeRate;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +65,25 @@ namespace BusinessAPI.API.Controllers
 
             return Ok(response);
 
+        }
+
+        [HttpGet("effectivebycurrency")]
+        public async Task<IActionResult> GetAllByCurrenyEffectiveExchange([FromQuery] GetByCurrencyExchangeEffectiveRateQueryRequest byCurrencyExchangeEffectiveRateQueryRequest )
+        {
+
+            GetByCurrencyExchangeEffectiveRateQueryResponse response = await _mediator.Send(byCurrencyExchangeEffectiveRateQueryRequest);
+
+            return Ok(response);
+
+        }
+
+
+        [HttpGet("exchangebycurrency")]
+        public async Task<IActionResult> GetAllByCurrenyExchange([FromQuery] GetByCurrencyExchangeRateQueryRequest getByCurrencyExchangeRateQueryRequest)
+        {
+            GetByCurrencyExchangeRateQueryResponse response = await _mediator.Send(getByCurrencyExchangeRateQueryRequest);
+
+            return Ok(response);
         }
     }
 }
