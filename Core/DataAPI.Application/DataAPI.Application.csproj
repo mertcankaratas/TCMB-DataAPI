@@ -17,4 +17,8 @@
     <ProjectReference Include="..\DataAPI.Domain\DataAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Queries\ExchangeEffectiveRate\GetByCurrency\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,5 @@
 ﻿using DataAPI.Application.Features.Queries.ExchangeCrossRate.GetAllCrossRate;
-using DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCodeCrossRate;
+using DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCrossRate;
 using DataAPI.Application.Features.Queries.ExchangeEffectiveRate.GetAllExchangeEffectiveRate;
 using DataAPI.Application.Features.Queries.ExchangeRate.GetAllExchangeRate;
 using MediatR;

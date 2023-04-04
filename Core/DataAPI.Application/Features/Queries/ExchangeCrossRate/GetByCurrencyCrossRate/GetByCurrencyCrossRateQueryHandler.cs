@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCodeCrossRate
+namespace DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCrossRate
 {
     public class GetByCurrencyCrossRateQueryHandler : IRequestHandler<GetByCurrencyCrossRateQueryRequest, GetByCurrencyCrossRateQueryResponse>
     {
