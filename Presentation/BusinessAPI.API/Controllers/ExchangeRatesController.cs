@@ -1,4 +1,5 @@
 ﻿using DataAPI.Application.Features.Queries.ExchangeCrossRate.GetAllCrossRate;
+using DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCodeCrossRate;
 using DataAPI.Application.Features.Queries.ExchangeEffectiveRate.GetAllExchangeEffectiveRate;
 using DataAPI.Application.Features.Queries.ExchangeRate.GetAllExchangeRate;
 using MediatR;
@@ -46,6 +47,18 @@ namespace BusinessAPI.API.Controllers
         public async Task<IActionResult> GetAllExchange([FromQuery] GetAllExchangeRateQueryRequest getAllExchangeRateQueryRequest)
         {
             GetAllExchangeRateQueryResponse response = await _mediator.Send(getAllExchangeRateQueryRequest);
+
+
+            return Ok(response);
+
+        }
+
+
+
+        [HttpGet("crossbycurrency")]
+        public async Task<IActionResult> GetAllByCurrenyCrossExchange([FromQuery] GetByCurrencyCrossRateQueryRequest codeCrossRateQueryRequest )
+        {
+            GetByCurrencyCrossRateQueryResponse response = await _mediator.Send(codeCrossRateQueryRequest);
 
 
             return Ok(response);

@@ -46,10 +46,7 @@ namespace DataAPI.Application.Features.Queries.ExchangeCrossRate.GetAllCrossRate
 
             }
 
-            //var datas = _exchangeCrossRateReadRepository.GetAll();
-
-            // result = _mapper.Map<List<ExchangeCrossRateListDTO>>(datas);
-            
+           
 
             return new()
             {
