@@ -1,7 +1,11 @@
-﻿using DataAPI.Application.Abstraction.Services.ExchangeRateWrite;
+﻿using DataAPI.Application.Abstraction.Services.ExchangeCrossRateWrite;
+using DataAPI.Application.Abstraction.Services.ExchangeEffectiveRateWrite;
+using DataAPI.Application.Abstraction.Services.ExchangeRateWrite;
 using DataAPI.Application.Repositories;
 using DataAPI.Persistence.Contexts;
 using DataAPI.Persistence.Repositories;
+using DataAPI.Persistence.Services.ExchangeCrossRateWrite;
+using DataAPI.Persistence.Services.ExchangeEffectiveRateWrite;
 using DataAPI.Persistence.Services.ExchangeRateWrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +36,9 @@ namespace DataAPI.Persistence
 
             services.AddScoped<IExchangeRateWriteService,ExchangeRateWriteService>();
 
+            services.AddScoped<IExchangeCrossRateWriteService, ExchangeCrossRateWriteService>();
+
+            services.AddScoped<IExchangeEffectiveRateWriteService, ExchangeEffectiveRateWriteService>();
 
         }
     }

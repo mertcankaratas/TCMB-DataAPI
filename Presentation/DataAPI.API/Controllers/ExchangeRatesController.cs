@@ -1,4 +1,6 @@
 ﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+using DataAPI.Application.Features.Commands.ExchangeCrossRate.CreateExchangeCrossRate;
+using DataAPI.Application.Features.Commands.ExchangeEffectiveRate.CreateExchangeEffectiveRate;
 using DataAPI.Application.Features.Commands.ExchangeRate.CreateExchangeRate;
 using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
@@ -21,8 +23,8 @@ namespace DataAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetAllExchange(CreateExchangeRateCommandRequest createExchangeRateCommandRequest)
+        [HttpPost("exchange")]
+        public async Task<IActionResult> WriteAllExchange(CreateExchangeRateCommandRequest createExchangeRateCommandRequest)
         {
 
             CreateExchangeRateCommandResponse response = await _mediator.Send(createExchangeRateCommandRequest);
@@ -31,36 +33,27 @@ namespace DataAPI.API.Controllers
 
         }
 
-        //[HttpGet("getallexchange")]
-        //public async Task<IActionResult> GetAllExchange()
-        //{
+        [HttpPost("Crossexchange")]
+        public async Task<IActionResult> WriteAllCrossExchange(CreateExchangeCrossRateCommandRequest createExchangeCrossRateCommandRequest )
+        {
 
-        //    List<ExchangeRateItem> data = await _exchangeRateService.GetExchangeData(Application.Enums.Exchange.ExchangeCurrencyType.BGN);
+            CreateExchangeCrossRateCommandResponse response = await _mediator.Send(createExchangeCrossRateCommandRequest);
 
-        //    return Ok(data);
+            return Ok(response);
 
-        //}
+        }
 
+        [HttpPost("effectiveexchange")]
+        public async Task<IActionResult> WriteAllEffectiveExchange(CreateExchangeEffectiveRateCommandRequest createExchangeEffectiveRateCommandRequest)
+        {
 
-        //[HttpGet("getallexchangeeffective")]
-        //public async Task<IActionResult> GetAllExchangeEffective()
-        //{
+            CreateExchangeEffectiveRateCommandResponse response = await _mediator.Send(createExchangeEffectiveRateCommandRequest);
 
-        //    List<ExchangeEffectiveRateItem> data = await _exchangeRateService.GetExchangeEffectiveData(Application.Enums.Exchange.ExchangeEffectiveCurrencyType.USD);
+            return Ok(response);
 
-        //    return Ok(data);
+        }
 
-        //}
-
-        //[HttpGet("getallexchangecross")]
-        //public async Task<IActionResult> GetAllExchangeCross()
-        //{
-
-        //    List<ExchangeCrossRateItem> data = await _exchangeRateService.GetExchangeCrossData(Application.Enums.Exchange.ExchangeCrossCurrencyType.USDToAUD);
-
-        //    return Ok(data);
-
-        //}
+        
 
     }
 }

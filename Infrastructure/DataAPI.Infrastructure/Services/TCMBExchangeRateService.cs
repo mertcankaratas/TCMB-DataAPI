@@ -215,7 +215,7 @@ namespace DataAPI.Infrastructure.Services
 
 
 
-                        exchangeCrossRateItem.Date = Convert.ToDateTime(properties.ElementAt(0).Value.GetString()).ToLocalTime();
+                        exchangeCrossRateItem.Date = Convert.ToDateTime(properties.ElementAt(0).Value.GetString()).ToUniversalTime();
                         //exchangeCrossRateItem.Unit = properties.ElementAt(k++).Value.GetString();
                         exchangeCrossRateItem.CrossRate = Convert.ToDecimal(properties.ElementAt(2).Value.GetString());
 
