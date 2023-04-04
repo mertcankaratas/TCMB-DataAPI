@@ -17,12 +17,4 @@
     <ProjectReference Include="..\DataAPI.Domain\DataAPI.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Queries\ExchangeCrossRate\GetByCurrenyCodeExchangeCrossRate\" />
-    <Folder Include="Features\Queries\ExchangeEffectiveRate\GetAllExchangeEffectiveRate\" />
-    <Folder Include="Features\Queries\ExchangeEffectiveRate\GetByCurrenyCodeExchangeEffectiveRate\" />
-    <Folder Include="Features\Queries\ExchangeRate\GetAllExchangeRate\" />
-    <Folder Include="Features\Queries\ExchangeRate\GetByCurrenyCodeExchangeRate\" />
-  </ItemGroup>
-
 </Project>

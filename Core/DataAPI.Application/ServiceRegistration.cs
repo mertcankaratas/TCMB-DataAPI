@@ -14,7 +14,7 @@ namespace DataAPI.Application
         public static void AddApplicationServices(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddMediatR(typeof(ServiceRegistration));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
 }

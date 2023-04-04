@@ -2,6 +2,7 @@
 using DataAPI.Application.Features.Commands.ExchangeCrossRate.CreateExchangeCrossRate;
 using DataAPI.Application.Features.Commands.ExchangeEffectiveRate.CreateExchangeEffectiveRate;
 using DataAPI.Application.Features.Commands.ExchangeRate.CreateExchangeRate;
+using DataAPI.Application.Features.Queries.CrossRate.GetAllCrossRate;
 using DataAPI.Infrastructure.Deserialize.ExchangeCrossRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeEffectiveRates;
 using DataAPI.Infrastructure.Deserialize.ExchangeRates;
@@ -53,7 +54,19 @@ namespace DataAPI.API.Controllers
 
         }
 
-        
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllCrossExchange([FromQuery]GetAllCrossRateQueryRequest getAllCrossRateQueryRequest)
+        {
+            GetAllCrossRateQueryResponse response = await _mediator.Send(getAllCrossRateQueryRequest);
+
+
+            return Ok(response);
+
+        }
+
+
 
     }
 }
