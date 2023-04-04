@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DataAPI.Application.Abstraction.Services.Cache;
+using DataAPI.Application.DTOs.ExchangeCrossRate;
 using DataAPI.Application.DTOs.ExchangeRate;
 using DataAPI.Application.Repositories;
 using MediatR;
@@ -14,18 +16,35 @@ namespace DataAPI.Application.Features.Queries.ExchangeRate.GetAllExchangeRate
     {
         readonly IMapper _mapper;
         readonly IExchangeRateReadRepository _exchangeRateReadRepository;
-
-        public GetAllExchangeRateQueryHandler(IMapper mapper, IExchangeRateReadRepository exchangeRateReadRepository)
+        readonly ICacheService _cacheService;
+        public GetAllExchangeRateQueryHandler(IMapper mapper, IExchangeRateReadRepository exchangeRateReadRepository, ICacheService cacheService)
         {
             _mapper = mapper;
             _exchangeRateReadRepository = exchangeRateReadRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<GetAllExchangeRateQueryResponse> Handle(GetAllExchangeRateQueryRequest request, CancellationToken cancellationToken)
         {
-            var datas = _exchangeRateReadRepository.GetAll();
+            var cacheData = _cacheService.GetData<IEnumerable<ExchangeRateListDTO>>("ExchangeRate");
+            List<ExchangeRateListDTO> result;
+ 
 
-            List<ExchangeRateListDTO> result = _mapper.Map<List<ExchangeRateListDTO>>(datas);
+            if (cacheData != null && cacheData.Count() > 0)
+            {
+                result = cacheData.ToList();
+            }
+            else
+            {
+                var datas = _exchangeRateReadRepository.GetAll();
+                result = _mapper.Map<List<ExchangeRateListDTO>>(datas);
+
+                var expireTime = DateTimeOffset.Now.AddMinutes(10);
+
+                _cacheService.SetData<IEnumerable<ExchangeRateListDTO>>("ExchangeRate", result, expireTime);
+
+            }
+
 
             return new()
             {

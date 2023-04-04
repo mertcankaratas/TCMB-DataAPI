@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DataAPI.Application.Abstraction.Services.Cache;
+using DataAPI.Application.DTOs.ExchangeCrossRate;
 using DataAPI.Application.DTOs.ExchangeEffectiveRate;
 using DataAPI.Application.Repositories;
 using MediatR;
@@ -14,18 +16,35 @@ namespace DataAPI.Application.Features.Queries.ExchangeEffectiveRate.GetAllExcha
     {
         readonly IMapper _mapper;
         readonly IExchangeEffectiveRateReadRepository _exchangeEffectiveRateReadRepository;
-
-        public GetAllExchangeEffectiveRateQueryHandler(IMapper mapper, IExchangeEffectiveRateReadRepository exchangeEffectiveRateReadRepository)
+        readonly ICacheService _cacheService;
+        public GetAllExchangeEffectiveRateQueryHandler(IMapper mapper, IExchangeEffectiveRateReadRepository exchangeEffectiveRateReadRepository, ICacheService cacheService)
         {
             _mapper = mapper;
             _exchangeEffectiveRateReadRepository = exchangeEffectiveRateReadRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<GetAllExchangeEffectiveRateQueryResponse> Handle(GetAllExchangeEffectiveRateQueryRequest request, CancellationToken cancellationToken)
         {
-            var datas = _exchangeEffectiveRateReadRepository.GetAll();
+            var cacheData = _cacheService.GetData<IEnumerable<ExchangeEffectiveRateListDTO>>("ExchangeEffectiveRate");
+            List<ExchangeEffectiveRateListDTO> result;
 
-            List<ExchangeEffectiveRateListDTO> result = _mapper.Map<List<ExchangeEffectiveRateListDTO>>(datas);
+            if (cacheData != null && cacheData.Count() > 0)
+            {
+                result = cacheData.ToList();
+            }
+            else
+            {
+                var datas = _exchangeEffectiveRateReadRepository.GetAll();
+
+                result = _mapper.Map<List<ExchangeEffectiveRateListDTO>>(datas);
+               
+                var expireTime = DateTimeOffset.Now.AddMinutes(10);
+
+                _cacheService.SetData<IEnumerable<ExchangeEffectiveRateListDTO>>("ExchangeEffectiveRate", result, expireTime);
+
+            }
+           
 
             return new()
             {

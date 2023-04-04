@@ -1,5 +1,7 @@
-﻿using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
+﻿using DataAPI.Application.Abstraction.Services.Cache;
+using DataAPI.Application.Abstraction.Services.ExchangeRateRead;
 using DataAPI.Infrastructure.Services;
+using DataAPI.Infrastructure.Services.Cache;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,9 +13,12 @@ namespace DataAPI.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static void AddInfrastructeServices(this IServiceCollection serviceCollection)
+        public static void AddInfrastructeServices(this IServiceCollection services)
         {
-            serviceCollection.AddSingleton<ITCMBExchangeRateService, TCMBExchangeRateService>();
+            services.AddSingleton<ITCMBExchangeRateService, TCMBExchangeRateService>();
+
+            
+            services.AddScoped<ICacheService, CacheService>();
         }
     }
 }
