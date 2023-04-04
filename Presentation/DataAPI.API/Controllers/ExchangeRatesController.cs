@@ -26,7 +26,7 @@ namespace DataAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("exchange")]
+        [HttpPost("addexchange")]
         public async Task<IActionResult> WriteAllExchange(CreateExchangeRateCommandRequest createExchangeRateCommandRequest)
         {
 
@@ -36,7 +36,7 @@ namespace DataAPI.API.Controllers
 
         }
 
-        [HttpPost("Crossexchange")]
+        [HttpPost("addcrossexchange")]
         public async Task<IActionResult> WriteAllCrossExchange(CreateExchangeCrossRateCommandRequest createExchangeCrossRateCommandRequest )
         {
 
@@ -46,7 +46,7 @@ namespace DataAPI.API.Controllers
 
         }
 
-        [HttpPost("effectiveexchange")]
+        [HttpPost("addeffectiveexchange")]
         public async Task<IActionResult> WriteAllEffectiveExchange(CreateExchangeEffectiveRateCommandRequest createExchangeEffectiveRateCommandRequest)
         {
 
@@ -58,36 +58,7 @@ namespace DataAPI.API.Controllers
 
 
 
-        [HttpGet("cross")]
-        public async Task<IActionResult> GetAllCrossExchange([FromQuery]GetAllCrossRateQueryRequest getAllCrossRateQueryRequest)
-        {
-            GetAllCrossRateQueryResponse response = await _mediator.Send(getAllCrossRateQueryRequest);
-
-
-            return Ok(response);
-
-        }
-
-        [HttpGet("effective")]
-        public async Task<IActionResult> GetAllEffectiveExchange([FromQuery] GetAllExchangeEffectiveRateQueryRequest getAllExchangeEffectiveRateQueryRequest )
-        {
-
-            GetAllExchangeEffectiveRateQueryResponse response = await _mediator.Send(getAllExchangeEffectiveRateQueryRequest);
-
-            return Ok(response);
-
-        }
-
-
-        [HttpGet("exchange")]
-        public async Task<IActionResult> GetAllExchange([FromQuery] GetAllExchangeRateQueryRequest getAllExchangeRateQueryRequest )
-        {
-            GetAllExchangeRateQueryResponse response = await _mediator.Send(getAllExchangeRateQueryRequest);
-            
-
-            return Ok(response);
-
-        }
+        
 
 
 
