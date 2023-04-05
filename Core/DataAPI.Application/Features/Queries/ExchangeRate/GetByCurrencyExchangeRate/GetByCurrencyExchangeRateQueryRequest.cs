@@ -9,6 +9,6 @@ namespace DataAPI.Application.Features.Queries.ExchangeRate.GetByCurrencyExchang
 {
     public class GetByCurrencyExchangeRateQueryRequest:IRequest<GetByCurrencyExchangeRateQueryResponse>
     {
-        public string Currency { get; set; }
+        public string CurrencyCode { get; set; }
     }
 }

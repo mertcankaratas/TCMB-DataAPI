@@ -26,7 +26,7 @@ namespace DataAPI.Application.Features.Queries.ExchangeRate.GetByCurrencyExchang
 
         public async Task<GetByCurrencyExchangeRateQueryResponse> Handle(GetByCurrencyExchangeRateQueryRequest request, CancellationToken cancellationToken)
         {
-            var cacheData = _cacheService.GetData<IEnumerable<ExchangeRateListDTO>>($"ExchangeRate{request.Currency}");
+            var cacheData = _cacheService.GetData<IEnumerable<ExchangeRateListDTO>>($"ExchangeRate{request.CurrencyCode}");
             List<ExchangeRateListDTO> result;
 
 
@@ -36,12 +36,12 @@ namespace DataAPI.Application.Features.Queries.ExchangeRate.GetByCurrencyExchang
             }
             else
             {
-                var datas = _exchangeRateReadRepository.GetWhere(x=>x.Currency==request.Currency);
+                var datas = _exchangeRateReadRepository.GetWhere(x=>x.CurrencyCode==request.CurrencyCode);
                 result = _mapper.Map<List<ExchangeRateListDTO>>(datas);
 
                 var expireTime = DateTimeOffset.Now.AddMinutes(10);
 
-                _cacheService.SetData<IEnumerable<ExchangeRateListDTO>>($"ExchangeRate{request.Currency}", result, expireTime);
+                _cacheService.SetData<IEnumerable<ExchangeRateListDTO>>($"ExchangeRate{request.CurrencyCode}", result, expireTime);
 
             }
 

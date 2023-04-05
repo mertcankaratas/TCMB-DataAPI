@@ -26,7 +26,7 @@ namespace DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCr
 
         public async Task<GetByCurrencyCrossRateQueryResponse> Handle(GetByCurrencyCrossRateQueryRequest request, CancellationToken cancellationToken)
         {
-            var cacheData = _cacheService.GetData<IEnumerable<ExchangeCrossRateListDTO>>($"CrossRate{request.FromCurrency}To{request.ToCurrency}");
+            var cacheData = _cacheService.GetData<IEnumerable<ExchangeCrossRateListDTO>>($"CrossRate{request.CurrencyCode}");
             List<ExchangeCrossRateListDTO> result;
             if (cacheData != null && cacheData.Count() > 0)
             {
@@ -34,13 +34,13 @@ namespace DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCr
             }
             else
             {
-                var datas = _exchangeCrossRateReadRepository.GetWhere(x => x.FromCurrency == request.FromCurrency && x.ToCurrency == request.ToCurrency);
+                var datas = _exchangeCrossRateReadRepository.GetWhere(x => x.CurrencyCode==request.CurrencyCode);
 
                 result = _mapper.Map<List<ExchangeCrossRateListDTO>>(datas);
 
                 var expireTime = DateTimeOffset.Now.AddMinutes(10);
 
-                _cacheService.SetData<IEnumerable<ExchangeCrossRateListDTO>>($"CrossRate{request.FromCurrency}To{request.ToCurrency}", result, expireTime);
+                _cacheService.SetData<IEnumerable<ExchangeCrossRateListDTO>>($"CrossRate{request.CurrencyCode}", result, expireTime);
 
 
             }

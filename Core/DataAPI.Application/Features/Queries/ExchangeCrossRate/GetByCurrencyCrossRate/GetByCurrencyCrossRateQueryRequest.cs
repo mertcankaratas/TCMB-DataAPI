@@ -9,7 +9,7 @@ namespace DataAPI.Application.Features.Queries.ExchangeCrossRate.GetByCurrencyCr
 {
     public class GetByCurrencyCrossRateQueryRequest:IRequest<GetByCurrencyCrossRateQueryResponse>
     {
-        public string FromCurrency { get; set; }
-        public string ToCurrency { get; set; }
+        public string CurrencyCode{ get; set; }
+       
     }
 }

@@ -26,7 +26,7 @@ namespace DataAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("addexchange")]
+        [HttpPost("AddExchange")]
         public async Task<IActionResult> WriteAllExchange(CreateExchangeRateCommandRequest createExchangeRateCommandRequest)
         {
 
@@ -36,7 +36,7 @@ namespace DataAPI.API.Controllers
 
         }
 
-        [HttpPost("addcrossexchange")]
+        [HttpPost("AddCrossExchange")]
         public async Task<IActionResult> WriteAllCrossExchange(CreateExchangeCrossRateCommandRequest createExchangeCrossRateCommandRequest )
         {
 
@@ -46,15 +46,7 @@ namespace DataAPI.API.Controllers
 
         }
 
-        [HttpPost("addeffectiveexchange")]
-        public async Task<IActionResult> WriteAllEffectiveExchange(CreateExchangeEffectiveRateCommandRequest createExchangeEffectiveRateCommandRequest)
-        {
-
-            CreateExchangeEffectiveRateCommandResponse response = await _mediator.Send(createExchangeEffectiveRateCommandRequest);
-
-            return Ok(response);
-
-        }
+      
 
 
 

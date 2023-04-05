@@ -24,7 +24,7 @@ namespace BusinessAPI.API.Controllers
 
 
 
-        [HttpGet("cross")]
+        [HttpGet("GetAllCrossExchange")]
         public async Task<IActionResult> GetAllCrossExchange([FromQuery] GetAllCrossRateQueryRequest getAllCrossRateQueryRequest)
         {
             GetAllCrossRateQueryResponse response = await _mediator.Send(getAllCrossRateQueryRequest);
@@ -34,18 +34,9 @@ namespace BusinessAPI.API.Controllers
 
         }
 
-        [HttpGet("effective")]
-        public async Task<IActionResult> GetAllEffectiveExchange([FromQuery] GetAllExchangeEffectiveRateQueryRequest getAllExchangeEffectiveRateQueryRequest)
-        {
-
-            GetAllExchangeEffectiveRateQueryResponse response = await _mediator.Send(getAllExchangeEffectiveRateQueryRequest);
-
-            return Ok(response);
-
-        }
 
 
-        [HttpGet("exchange")]
+        [HttpGet("GetAllExchange")]
         public async Task<IActionResult> GetAllExchange([FromQuery] GetAllExchangeRateQueryRequest getAllExchangeRateQueryRequest)
         {
             GetAllExchangeRateQueryResponse response = await _mediator.Send(getAllExchangeRateQueryRequest);
@@ -57,7 +48,7 @@ namespace BusinessAPI.API.Controllers
 
 
 
-        [HttpGet("crossbycurrency")]
+        [HttpGet("GetCrossByCurrency")]
         public async Task<IActionResult> GetAllByCurrenyCrossExchange([FromQuery] GetByCurrencyCrossRateQueryRequest codeCrossRateQueryRequest )
         {
             GetByCurrencyCrossRateQueryResponse response = await _mediator.Send(codeCrossRateQueryRequest);
@@ -67,18 +58,9 @@ namespace BusinessAPI.API.Controllers
 
         }
 
-        [HttpGet("effectivebycurrency")]
-        public async Task<IActionResult> GetAllByCurrenyEffectiveExchange([FromQuery] GetByCurrencyExchangeEffectiveRateQueryRequest byCurrencyExchangeEffectiveRateQueryRequest )
-        {
-
-            GetByCurrencyExchangeEffectiveRateQueryResponse response = await _mediator.Send(byCurrencyExchangeEffectiveRateQueryRequest);
-
-            return Ok(response);
-
-        }
 
 
-        [HttpGet("exchangebycurrency")]
+        [HttpGet("GetExchangeByCurrency")]
         public async Task<IActionResult> GetAllByCurrenyExchange([FromQuery] GetByCurrencyExchangeRateQueryRequest getByCurrencyExchangeRateQueryRequest)
         {
             GetByCurrencyExchangeRateQueryResponse response = await _mediator.Send(getByCurrencyExchangeRateQueryRequest);
